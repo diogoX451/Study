@@ -12,9 +12,12 @@ import (
 */
 
 var level int = 10
+var completo string
+var nome string = "Diogo"
+var lastaname string = "Almeida"
 
 func main() {
-	var nome string = "Diogo"
+
 	var idade int = 15
 	var preco float32 = 1.1
 	var veriffyType = reflect.TypeOf(preco) // Verificar o type
@@ -35,4 +38,13 @@ func main() {
 	level = comando
 
 	fmt.Println(nome, idade)
+
+	fmt.Println(completo)
+
+}
+
+func nomeCompleto() {
+	completo = nome + lastaname
+	fmt.Println(completo)
+	return
 }
