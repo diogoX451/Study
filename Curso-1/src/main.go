@@ -2,12 +2,13 @@ package main
 
 import (
 	"fmt"
+	"net/http"
 	"reflect"
 )
 
 // Level Package Scopes
 /*
-	- Não se pode declarar variaveis do tipo abriviado na forma global
+	- Não se pode declarar variaveis do tipo abreviado na forma global
 		so funciona em code blocks
 */
 
@@ -31,9 +32,15 @@ func main() {
 		fmt.Println(parabens)
 	}
 
+	nameAndLastname, age := nomeCompleto() // Atribuição multipla
+
+	teste1, _ = nomeCompleto() // Atribuição multipla ignorando o segundo valor
+
+	fmt.Println(nameAndLastname, age)
+
 	var comando int
 
-	fmt.Scanf("%d", &idade) // & referencia da variavel
+	fmt.Scanf("%d", &comando) // & referencia da variavel
 
 	level = comando
 
@@ -41,10 +48,55 @@ func main() {
 
 	fmt.Println(completo)
 
+	Array()
+	loop()
+	runTeste()
+	// for { // loop infinito
+	// 	switch comando {
+	// 	case 1:
+	// 		os.Exit(0)
+	// 	case 2:
+	// 		fmt.Println("2")
+	// 	default:
+	// 		fmt.Println("Default")
+	// 	}
+
+	// }
+
 }
 
-func nomeCompleto() {
+func nomeCompleto() (string, int) {
 	completo = nome + lastaname
-	fmt.Println(completo)
+	idade := 17
+	return completo, idade
+}
+
+func Array() {
+	multiArray := []string{"Diogo", "Huakson"}
+	fmt.Println(len(multiArray))
+	multiArray = append(multiArray, "Almeida")
+	fmt.Println(len(multiArray))
+	fmt.Println(cap(multiArray))
 	return
+}
+
+func loop() {
+	teste := []string{"Diogo", "Huakson", "Almeida"}
+	for i, teteste := range teste {
+		fmt.Println(i, teteste)
+	}
+}
+
+func runTeste() {
+	for i := 0; i < 100000; i++ {
+		res, erro := http.Get("http://localhost:8000/")
+
+		if erro != nil {
+			fmt.Println(erro)
+		}
+		if res.StatusCode == 200 {
+			fmt.Println(i)
+		}
+	}
+
 }
