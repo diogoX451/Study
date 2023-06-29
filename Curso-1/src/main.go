@@ -1,9 +1,12 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"net/http"
+	"os"
 	"reflect"
+	"strings"
 )
 
 // Level Package Scopes
@@ -50,7 +53,12 @@ func main() {
 
 	Array()
 	loop()
-	runTeste()
+	// runTeste()
+	teste, err := hasEmbargo()
+	if err != nil {
+		fmt.Println("Error:", err.Error())
+	}
+	fmt.Println(teste)
 	// for { // loop infinito
 	// 	switch comando {
 	// 	case 1:
@@ -98,5 +106,21 @@ func runTeste() {
 			fmt.Println(i)
 		}
 	}
+}
 
+func hasEmbargo() (bool, error) {
+	arquivo, err := os.Open("../../embargo.csv")
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	doc := bufio.NewScanner(arquivo)
+
+	for doc.Scan() {
+		if strings.Contains(doc.Text(), "Adair Borges Pereira") {
+			return true, nil
+		}
+	}
+
+	return false, nil
 }
