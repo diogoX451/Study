@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"io"
 	"net/http"
 	"os"
 	"reflect"
@@ -109,7 +110,8 @@ func runTeste() {
 }
 
 func hasEmbargo() (bool, error) {
-	arquivo, err := os.Open("../../embargo.csv")
+	Download()
+	arquivo, err := os.Open("./embargo.csv")
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -117,10 +119,31 @@ func hasEmbargo() (bool, error) {
 	doc := bufio.NewScanner(arquivo)
 
 	for doc.Scan() {
-		if strings.Contains(doc.Text(), "Adair Borges Pereira") {
+		if strings.Contains(doc.Text(), "131.219.109-06") {
 			return true, nil
 		}
 	}
 
 	return false, nil
+}
+
+func Download() error {
+	res, err := http.Get("")
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	defer res.Body.Close()
+
+	out, err := os.Create("embargo.csv")
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	defer out.Close()
+
+	_, err = io.Copy(out, res.Body)
+	return err
 }
