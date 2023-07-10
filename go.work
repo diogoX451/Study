@@ -1,0 +1,6 @@
+go 1.20
+
+use (
+	./Curso-1
+	./Curso-2
+)
